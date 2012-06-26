@@ -6,4 +6,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface PatentServiceAsync {
 	void getInfo(String patentId, AsyncCallback<HashMap<String, String>> callback);
+	void getParams(String patentId, AsyncCallback<HashMap<String, String>> callback);
 }

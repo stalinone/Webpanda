@@ -8,12 +8,19 @@ import edu.ntuim.client.PatentService;
 import ntu.im.bilab.panda.jacky.Patent;
 
 @SuppressWarnings("serial")
-public class PatentServiceImpl extends RemoteServiceServlet implements PatentService {
-	public HashMap<String,String> getInfo(String patentId) {
+public class PatentServiceImpl extends RemoteServiceServlet implements
+		PatentService {
+
+	public HashMap<String, String> getInfo(String patentId) {
 		Patent patent = new Patent(patentId);
 		patent.setInfo();
-		return (HashMap<String,String>)patent.getInfo();
+		return (HashMap<String, String>) patent.getInfo();
 	}
 
+	public HashMap<String, String> getParams(String patentId) {
+		Patent patent = new Patent(patentId);
+		patent.setParams();
+		return (HashMap<String, String>) patent.getParams();
+	}
 
 }

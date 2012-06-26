@@ -32,3 +32,17 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+div .gwt-Label {
+	font-size: 12pt !important;
+}
+
+div .gwt-HTML {
+	font-size: 12pt !important;
+}
+
+body {
+	background-image: url("image/bg.png") !important;
+	background-position: right bottom !important;
+	background-repeat: no-repeat !important;
+}
