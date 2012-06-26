@@ -1,0 +1,2 @@
+serviceClass: edu.ntuim.client.GreetingService
+path: 0C169E49112E780F1802BCAC0BD61C2A.gwt.rpc
