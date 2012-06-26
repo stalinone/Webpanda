@@ -3,11 +3,12 @@
 
 /** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bold;
   color: #777777;
   margin: 40px 0px 70px;
   text-align: center;
+  font-family: "Segoe UI" !important;
 }
 
 .sendButton {
@@ -28,6 +29,11 @@ h1 {
   color: red;
 }
 
+.loadingLabel {
+	color: red;
+	text-decoration: blink;
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
@@ -43,6 +49,10 @@ div .gwt-HTML {
 
 body {
 	background-image: url("image/bg.png") !important;
-	background-position: right bottom !important;
+	background-position: right 300px !important;
 	background-repeat: no-repeat !important;
+}
+
+table td {
+	font-size: 12pt !important;
 }

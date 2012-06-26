@@ -33,8 +33,8 @@ public class Web implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	/*private final GreetingServiceAsync greetingService = GWT
+			.create(GreetingService.class);*/
 	private final PatentServiceAsync patentService = GWT.create(PatentService.class);
 
 	/**
@@ -68,12 +68,15 @@ public class Web implements EntryPoint {
 		closeButton.getElement().setId("closeButton");
 		final Label textToServerLabel = new Label();
 		final HTML serverResponseLabel = new HTML();
+		final HTML paramsLabel = new HTML();
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.add(new HTML("<b>Sending Patent ID to the server:</b>"));
 		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+		dialogVPanel.add(new HTML("<br><b>Patent profile:</b>"));
 		dialogVPanel.add(serverResponseLabel);
+		dialogVPanel.add(new HTML("<br><b>Patent parameters:</b>"));
+		dialogVPanel.add(paramsLabel);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
 		dialogBox.setWidget(dialogVPanel);
@@ -144,6 +147,10 @@ public class Web implements EntryPoint {
 								closeButton.setFocus(true);
 							}
 						});*/
+				dialogBox.setText("Reading Database...");
+				serverResponseLabel.addStyleName("loadingLabel");
+				serverResponseLabel.setHTML("Loading...");
+				dialogBox.center();
 				
 				patentService.getInfo(textToServer, new AsyncCallback<HashMap<String,String>>() {
 					public void onFailure(Throwable caught) {
@@ -160,7 +167,40 @@ public class Web implements EntryPoint {
 						dialogBox.setText("Remote Procedure Call");
 						serverResponseLabel
 								.removeStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(resultMap.toString());
+						serverResponseLabel.removeStyleName("loadingLabel");
+						String id = resultMap.get("id");
+						String abs = resultMap.get("abstract");
+						String year = resultMap.get("year");
+						String displayHTML = "ID: " + id + "<br>Issued Year: " + year + "<br>Abstract: " + abs;
+						serverResponseLabel.setHTML(displayHTML);
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+				});
+				paramsLabel.addStyleName("loadingLabel");
+				paramsLabel.setHTML("Loading...");
+				patentService.getParams(textToServer, new AsyncCallback<HashMap<String,String>>() {
+					public void onFailure(Throwable caught) {
+						// Show the RPC error message to the user
+						dialogBox
+								.setText("Remote Procedure Call - Failure - Patent");
+						paramsLabel
+								.addStyleName("serverResponseLabelError");
+						paramsLabel.setHTML(SERVER_ERROR);
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+					public void onSuccess(HashMap<String, String> resultMap) {
+						dialogBox.setText("Remote Procedure Call");
+						paramsLabel
+								.removeStyleName("serverResponseLabelError");
+						paramsLabel.removeStyleName("loadingLabel");
+						String inventors = resultMap.get("inventors");
+						String nobwdcite = resultMap.get("num_of_bwd_citations");
+						String originality_USPC = resultMap.get("originality_USPC");
+						String num_of_assignee_transfer = resultMap.get("num_of_assignee_transfer");
+						String displayHTML = "Inventors: " + inventors + "<br># of backward citations: " + nobwdcite + "<br>originality_USPC: " + originality_USPC + "<br>num_of_assignee_transfer: " + num_of_assignee_transfer;
+						paramsLabel.setHTML(displayHTML);
 						dialogBox.center();
 						closeButton.setFocus(true);
 					}
