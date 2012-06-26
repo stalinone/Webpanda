@@ -1,0 +1,2 @@
+serviceClass: edu.ntuim.client.PatentService
+path: AFD5C58E2BAFFA7DA4D33DE644856485.gwt.rpc

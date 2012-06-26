@@ -3,6 +3,7 @@ package edu.ntuim.client;
 import edu.ntuim.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import java.util.HashMap;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -34,6 +35,7 @@ public class Web implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
+	private final PatentServiceAsync patentService = GWT.create(PatentService.class);
 
 	/**
 	 * This is the entry point method.
@@ -119,6 +121,7 @@ public class Web implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
+				/*
 				greetingService.greetServer(textToServer,
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
@@ -140,7 +143,28 @@ public class Web implements EntryPoint {
 								dialogBox.center();
 								closeButton.setFocus(true);
 							}
-						});
+						});*/
+				
+				patentService.getInfo(textToServer, new AsyncCallback<HashMap<String,String>>() {
+					public void onFailure(Throwable caught) {
+						// Show the RPC error message to the user
+						dialogBox
+								.setText("Remote Procedure Call - Failure - Patent");
+						serverResponseLabel
+								.addStyleName("serverResponseLabelError");
+						serverResponseLabel.setHTML(SERVER_ERROR);
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+					public void onSuccess(HashMap<String, String> resultMap) {
+						dialogBox.setText("Remote Procedure Call");
+						serverResponseLabel
+								.removeStyleName("serverResponseLabelError");
+						serverResponseLabel.setHTML(resultMap.toString());
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+				});
 			}
 		}
 

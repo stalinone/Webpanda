@@ -16,6 +16,16 @@
     <url-pattern>/web/greet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>patentServlet</servlet-name>
+    <servlet-class>edu.ntuim.server.PatentServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>patentServlet</servlet-name>
+    <url-pattern>/web/patent</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Web.html</welcome-file>

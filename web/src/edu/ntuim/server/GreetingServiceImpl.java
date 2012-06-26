@@ -35,7 +35,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		HashMap<String,String> m = (HashMap<String, String>) test.getInfo(); 
 
 		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent + "<br><br>" + m.get("abstract");
+				+ ".<br><br>It looks like you are using:<br>" + userAgent + "<br><br>" + m.toString();
 	}
 
 	/**
